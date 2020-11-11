@@ -1,0 +1,33 @@
+---
+
+- name: prep tower cluster for python3
+  hosts: tower
+  gather_facts: false
+  become: true
+  vars:
+    packages:
+      - gcc
+      - python3-devel
+      - python3
+      - openssl-devel
+      - python-enum
+      - python-enum34
+    venv_packages:
+      - python-memcached
+      - psutil
+      - ansible
+      - enum34
+  tasks:
+
+    - name: install python3 packages
+      yum:
+        name: "{{ packages }}"
+        state: latest
+
+    - name: setup virtual envs
+      pip:
+        virtualenv: /var/lib/awx/venv/mypy3
+        virtualenv_python: python3
+        umask: "0022"
+        name: "{{ venv_packages }}"
+        #executable: "pip3"

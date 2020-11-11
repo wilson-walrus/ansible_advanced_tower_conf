@@ -1,0 +1,38 @@
+tower_hostname: https://tower2.5170.example.opentlc.com
+tower_admin_username: admin
+tower_admin_password: ZbKwzMnNvAcy
+tower_verify_ssl: false
+
+tower_credentials:
+  - name: Multi Tier Private Key
+    username: ec2-user
+    ssh_key_data: "{{ lookup('file', '/home/devops/guidkey') }}"
+    become_method: sudo
+    description: Private key to connect to Multi Tier servers
+    organization: Default
+    type: "Machine"
+    state: present
+
+tower_projects:
+  - name: Multi Tier SCM
+    description: Multi Tier App Deployment Project
+    organization: Default
+    scm_type: git
+    scm_url: https://github.com/wilson-walrus/ansible_flask_app_loader_all_in_one.git
+    state: present
+
+tower_inventories:
+  - name: Multi Tier Inventory
+    description: Multi Tier Inventory
+    organization: Default
+
+tower_inventory_source:
+  - name: "Multi Tier Static"
+    description: "Sourced from Project"
+    inventory: "Multi Tier Inventory"
+    source_project: "Multi Tier SCM"
+    source: "scm"
+    source_path: "hosts"
+    update_on_launch: true
+    state: present
+

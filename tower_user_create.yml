@@ -1,0 +1,33 @@
+---
+- name: Create tower users
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  become: false
+  vars:
+    tower_admin_username: admin
+    tower_admin_password: ZbKwzMnNvAcy
+    tower_hostname: https://tower1.5170.example.opentlc.com
+    new_tower_users:
+      - username: sam
+        password: redhat123
+        first_name: Sam
+        last_name: Simons
+        email_address: sam@lab.example.com
+  tasks:
+    - name: import tower license with awx.awx collection
+      awx.awx.tower_user:
+        username: "{{ __users.username }}"
+        password: "{{ __users.password }}"
+        first_name: "{{ __users.first_name }}"
+        last_name: "{{ __users.last_name }}"
+        email: "{{ __users.email_address | default(omit) }}"
+        superuser: "{{ __users.admin | default(false) }}"
+        state: "{{ __users.state | default('present') }}"
+        tower_host: "{{ tower_hostname }}"
+        tower_username: "{{ tower_admin_username | default('admin') }}"
+        tower_password: "{{ tower_admin_password }}"
+        validate_certs: false
+      loop: "{{ new_tower_users }}"
+      loop_control:
+        loop_var: __users
