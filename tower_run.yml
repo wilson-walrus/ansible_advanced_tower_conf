@@ -5,17 +5,19 @@
   gather_facts: false
   become: false
   collections:
-    - awx.awxi
+    - awx.awx
   pre_tasks:
-    - name: getting UID
+    - name: getting GUID
       shell: "hostname | cut -d '.' -f 2"
-      register: uid
+      register: r_guid
+      tags:
+        - always
 
     - name: updating variable
-      inlinefile:
-        path: ~/ansible_advanced_tower_conf/roles/tower_config/defaults/main.yml
-        regexp: '^tower_hostname:'
-        line: "tower_hostname: https://tower1.{{ uid.stdout }}.example.opentlc.com"
-
+      set_fact:
+        tower_hostname: "https://tower1.{{ r_guid.stdout }}.example.opentlc.com"
+      tags:
+        - always
+        
   roles:
     - tower_config

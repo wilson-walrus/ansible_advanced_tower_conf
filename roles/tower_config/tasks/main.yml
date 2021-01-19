@@ -17,7 +17,7 @@
   loop_control:
     loop_var: __users
   tags:
-    - users-create
+    - tower-users-create
 
 - name: import tower license with awx.awx collection
   awx.awx.tower_license:
@@ -28,7 +28,7 @@
     tower_password: "{{ tower_admin_password }}"
     validate_certs: false
   tags:
-    - license
+    - tower-license-upload
 
 - name: Add tower credentials for Satellite
   awx.awx.tower_credential:
@@ -71,6 +71,8 @@
   loop: "{{ tower_projects }}"
   loop_control:
     loop_var: __tower_project
+  tags:
+    - tower-project-create
 
 - name: Sleep to allow tower projects to update
   wait_for:
@@ -89,9 +91,10 @@
   loop: "{{ tower_inventories }}"
   loop_control:
     loop_var: __tower_inventory
+  tags:
+    - tower-inventory-create
 
-- when: tower_inventory_source is defined
-  name: Add tower inventory source
+- name: Add tower inventory source
   awx.awx.tower_inventory_source:
     name: "{{ __tower_inventory_source.name }}"
     description: "{{ __tower_inventory_source.description }}"
@@ -112,8 +115,7 @@
   tags:
     - tower-inventory-source-create
 
-- when: tower_job_templates is defined
-  name: Add Ansible Tower Job Template
+- name: Add Ansible Tower Job Template
   awx.awx.tower_job_template:
     name: "{{ __tower_job_template.name }}"
     description: "{{ __tower_job_template.description }}"

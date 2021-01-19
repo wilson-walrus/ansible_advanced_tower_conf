@@ -6,8 +6,9 @@ new_tower_users:
     first_name: Sam
     last_name: Simons
     email_address: sam@lab.example.com
-        
-tower_hostname: https://tower1.CHANGEME.example.opentlc.com
+
+# Hostname controled by set_fact module        
+# tower_hostname: https://tower1.74f9.example.opentlc.com 
 tower_admin_username: admin
 tower_admin_password: r3dh4t1!
 tower_verify_ssl: false
@@ -22,11 +23,20 @@ tower_credentials:
     type: "Machine"
     state: present
 
+tower_job_templates:
+  - name: "Multi-Tier Deploy"
+    description: "Deploy Multi Tier"
+    inventory: "Multi Tier Inventory"
+    credential: "Multi Tier Private Key"
+    project: "Multi Tier SCM"
+    playbook: site.yml
+
 tower_projects:
   - name: Multi Tier SCM
     description: Multi Tier App Deployment Project
     organization: Default
     scm_type: git
+    scm_branch: main
     scm_url: https://github.com/wilson-walrus/ansible_flask_app_loader_all_in_one.git
     state: present
 
