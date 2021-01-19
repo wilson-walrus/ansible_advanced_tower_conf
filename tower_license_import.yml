@@ -5,8 +5,6 @@
   gather_facts: false
   become: false
   vars:
-    tower_admin_username: admin
-    tower_admin_password: ZbKwzMnNvAcy
     tower_license: >
       {"subscription_name": "Ansible Tower by Red Hat, Standard (50 Managed Nodes)", "eula_accepted": true, "instance_count": 50, "trial": false, "contact_email": "ankay@redhat.com", "company_name": "Red Hat, Inc", "license_type": "enterprise", "contact_name": "Tony Kay", "license_date": 1640926800, "license_key": "3b401b6d910349c3dae2f122d2d75f9354c8e3adbb7eaf46f08e7623e2061133"}
   tasks:
@@ -14,7 +12,7 @@
       awx.awx.tower_license:
         data: "{{ tower_license }}"
         eula_accepted: true
-        tower_host: "https://tower1.5170.example.opentlc.com"
+        tower_host: "{{ tower_hostname }}"
         tower_username: "{{ tower_admin_username | default('admin') }}"
         tower_password: "{{ tower_admin_password }}"
         validate_certs: false

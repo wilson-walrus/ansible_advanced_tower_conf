@@ -5,9 +5,6 @@
   gather_facts: false
   become: false
   vars:
-    tower_admin_username: admin
-    tower_admin_password: ZbKwzMnNvAcy
-    tower_hostname: https://tower1.5170.example.opentlc.com
     new_tower_users:
       - username: sam
         password: redhat123
@@ -15,7 +12,7 @@
         last_name: Simons
         email_address: sam@lab.example.com
   tasks:
-    - name: import tower license with awx.awx collection
+    - name: Create ansible tower users with awx.awx collection
       awx.awx.tower_user:
         username: "{{ __users.username }}"
         password: "{{ __users.password }}"

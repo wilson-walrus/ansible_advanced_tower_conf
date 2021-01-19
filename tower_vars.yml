@@ -1,6 +1,6 @@
-tower_hostname: https://tower2.5170.example.opentlc.com
+tower_hostname: https://tower1.74f9.example.opentlc.com
 tower_admin_username: admin
-tower_admin_password: ZbKwzMnNvAcy
+tower_admin_password: r3dh4t1!
 tower_verify_ssl: false
 
 tower_credentials:
