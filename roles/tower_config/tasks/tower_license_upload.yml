@@ -1,0 +1,11 @@
+
+---
+
+- name: import tower license with awx.awx collection
+  awx.awx.tower_license:
+    data: "{{ tower_license }}"
+    eula_accepted: true
+    tower_host: "{{ tower_hostname }}"
+    tower_username: "{{ tower_admin_username | default('admin') }}"
+    tower_password: "{{ tower_admin_password }}"
+    validate_certs: false
