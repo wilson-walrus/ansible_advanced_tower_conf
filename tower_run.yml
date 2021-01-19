@@ -1,10 +1,10 @@
 ---
-- name: import my tower license
+- name: configure tower
   hosts: localhost
   connection: local
   gather_facts: false
   become: false
   collections:
     - awx.awx
-  tasks:
-    - include_tasks: tower_configure.yml
+  roles:
+    - tower_config

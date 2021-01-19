@@ -1,4 +1,34 @@
 ---
+# tasks file for tower_config
+- name: Create ansible tower users with awx.awx collection
+  awx.awx.tower_user:
+    username: "{{ __users.username }}"
+    password: "{{ __users.password }}"
+    first_name: "{{ __users.first_name }}"
+    last_name: "{{ __users.last_name }}"
+    email: "{{ __users.email_address | default(omit) }}"
+    superuser: "{{ __users.admin | default(false) }}"
+    state: "{{ __users.state | default('present') }}"
+    tower_host: "{{ tower_hostname }}"
+    tower_username: "{{ tower_admin_username | default('admin') }}"
+    tower_password: "{{ tower_admin_password }}"
+    validate_certs: false
+  loop: "{{ new_tower_users }}"
+  loop_control:
+    loop_var: __users
+  tags:
+    - users-create
+
+- name: import tower license with awx.awx collection
+  awx.awx.tower_license:
+    data: "{{ tower_license }}"
+    eula_accepted: true
+    tower_host: "{{ tower_hostname }}"
+    tower_username: "{{ tower_admin_username | default('admin') }}"
+    tower_password: "{{ tower_admin_password }}"
+    validate_certs: false
+  tags:
+    - license
 
 - name: Add tower credentials for Satellite
   awx.awx.tower_credential:
