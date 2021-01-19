@@ -1,4 +1,10 @@
 ---
 collections:
+
+## For tower 3.7 use the below version
+#- name: awx.awx
+#  version: '15.0.0'
+
+## Tower 3.8
 - name: awx.awx
-  version: '15.0.0'
+

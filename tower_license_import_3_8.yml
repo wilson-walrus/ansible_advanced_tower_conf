@@ -1,0 +1,17 @@
+---
+- name: import my tower license
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  become: false
+  vars:
+    tower_manifest: /home/devops/manifest_ansible-a-1-19_20210119T162407Z.zip
+  tasks:
+    - name: import tower license with awx.awx collection
+      awx.awx.tower_license:
+        manifest: "{{ tower_manifest }}"
+        eula_accepted: true
+        tower_host: "{{ tower_hostname }}"
+        tower_username: "{{ tower_admin_username | default('admin') }}"
+        tower_password: "{{ tower_admin_password }}"
+        validate_certs: false

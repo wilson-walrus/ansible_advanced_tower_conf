@@ -1,5 +1,5 @@
 ---
-- name: import my tower license
+- name: Setup class tower system
   hosts: localhost
   connection: local
   gather_facts: false
