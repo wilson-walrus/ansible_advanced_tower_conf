@@ -7,7 +7,7 @@ new_tower_users:
     last_name: Simons
     email_address: sam@lab.example.com
         
-tower_hostname: https://tower1.74f9.example.opentlc.com
+tower_hostname: https://tower1.CHANGEME.example.opentlc.com
 tower_admin_username: admin
 tower_admin_password: r3dh4t1!
 tower_verify_ssl: false
